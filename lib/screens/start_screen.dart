@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trivia_app/screens/new_game.dart';
 
 class StartScreen extends StatefulWidget {
   @override
@@ -29,7 +30,10 @@ class _StartScreenState extends State<StartScreen> {
           Column(
             children: <Widget>[
               RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => NewGame()));
+                },
                 child: Text('Start Game',
                     style: TextStyle(fontSize: 20, color: Colors.black26)),
               ),

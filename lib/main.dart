@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'screens/new_game.dart';
+import 'screens/start_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,11 +9,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        
         theme: ThemeData(
-          primaryColor: Color(0xffE63946),
-          accentColor: Color(0xff1D3557),
-          /*
+            primaryColor: Color(0xffE63946),
+            accentColor: Color(0xff1D3557),
+            /*
           #E63946
           #F1FAEE
           #A8DADC
@@ -20,13 +20,9 @@ class MyApp extends StatelessWidget {
           #1D3557
           #474747
           */
-          // Define the default font family.
-          
+            // Define the default font family.
 
-          
-          
-          scaffoldBackgroundColor: Color(0xffF1FAEE)),
-        home: NewGame());
+            scaffoldBackgroundColor: Color(0xffF1FAEE)),
+        home: StartScreen());
   }
 }
-

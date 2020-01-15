@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'game_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -27,6 +28,7 @@ class _NewGameMenu extends State<NewGame> {
   List _locations;
   List difficulty = ["Easy", "Intermediate", "Difficult"];
   double lives = 3.0;
+  double timePerQuestion = 10;
 
   String _selectedLocation; // Option 2
   String _selectedDifficulty;
@@ -52,102 +54,151 @@ class _NewGameMenu extends State<NewGame> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "New Game",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 50,
-                      fontWeight: FontWeight.w600),
-                ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(height: 35),
+              Text(
+                "New Game",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 35,
+                    fontWeight: FontWeight.w600),
               ),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Center(
-              child: Card(
-                child: Container(
-                  padding: EdgeInsets.all(8.0),
-                  width: 300,
-                  height: 320,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text("Category",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w600)),
-                      DropdownButton(
-                        isExpanded: true,
-                        hint: Center(
-                          child: Text('Please choose a category'),
-                        ), // Not necessary for Option 1
-                        value: _selectedLocation,
-                        onChanged: (newValue) {
-                          setState(() {
-                            _selectedLocation = newValue;
-                          });
-                        },
-                        items: _locations != null
-                            ? _locations.map((location) {
-                                return DropdownMenuItem(
-                                  child: new Text(location),
-                                  value: location,
-                                );
-                              }).toList()
-                            : null,
+              SizedBox(height: (MediaQuery.of(context).size.width / 4) - 50),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Column(children: <Widget>[
+                    Center(
+                      child: Card(
+                        child: Container(
+                          padding: EdgeInsets.all(8.0),
+                          width: 300,
+                          height: 350,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text("Category",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600)),
+                              DropdownButton(
+                                isExpanded: true,
+                                hint: Center(
+                                  child: Text('Please choose a category'),
+                                ), // Not necessary for Option 1
+                                value: _selectedLocation,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    _selectedLocation = newValue;
+                                  });
+                                },
+                                items: _locations != null
+                                    ? _locations.map((location) {
+                                        return DropdownMenuItem(
+                                          child: new Text(location),
+                                          value: location,
+                                        );
+                                      }).toList()
+                                    : null,
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Text("Difficulty",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600)),
+                              DropdownButton(
+                                isExpanded: true,
+                                hint: Center(
+                                  child: Text('Please choose a difficulty'),
+                                ), // Not necessary for Option 1
+                                value: _selectedDifficulty,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    _selectedDifficulty = newValue;
+                                  });
+                                },
+                                items: <String>[
+                                  'Easy',
+                                  'Intermediate',
+                                  'Hard'
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Text("Lives",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600)),
+                              Slider(
+                                activeColor: Theme.of(context).primaryColor,
+                                label: lives > 1
+                                    ? lives.toInt().toString() + " lives"
+                                    : lives.toInt().toString() +
+                                        " life", //Remove decimal
+                                value: lives,
+                                onChanged: (newLives) {
+                                  setState(() => lives = newLives);
+                                },
+                                min: 1,
+                                max: 5,
+                                divisions: 4,
+                              ),
+                              SizedBox(
+                                height: 0,
+                              ),
+                              Text("Time Per Question",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600)),
+                              Slider(
+                                activeColor: Theme.of(context).primaryColor,
+
+                                label: timePerQuestion.toInt().toString() +
+                                    " sec", //Remove decimal
+                                value: timePerQuestion,
+                                onChanged: (newLives) {
+                                  setState(() => timePerQuestion = newLives);
+                                },
+                                min: 5,
+                                max: 20,
+                                divisions: 15,
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Text("Difficulty",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w600)),
-                      DropdownButton(
-                        isExpanded: true,
-                        hint: Center(
-                          child: Text('Please choose a difficulty'),
-                        ), // Not necessary for Option 1
-                        value: _selectedDifficulty,
-                        onChanged: (newValue) {
-                          setState(() {
-                            _selectedDifficulty = newValue;
-                          });
-                        },
-                        items: <String>['Easy', 'Intermediate', 'Hard']
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Text("Lives",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w600)),
-                      Slider(
-                        value: lives,
-                        onChanged: (newLives) {
-                          setState(() => lives = newLives);
-                        },
-                        min: 1,
-                        max: 5,
-                        divisions: 5,
-                      ),
-                    ],
-                  ),
-                ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    RaisedButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Game()));
+                      },
+                      child: Text('Start Game',
+                          style:
+                              TextStyle(fontSize: 20, color: Colors.black26)),
+                    ),
+                  ]),
+                ],
               ),
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );

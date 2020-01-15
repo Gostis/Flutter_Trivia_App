@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             primaryColor: Color(0xffE63946),
             accentColor: Color(0xff1D3557),
+
             /*
           #E63946
           #F1FAEE
@@ -24,6 +25,6 @@ class MyApp extends StatelessWidget {
             // Define the default font family.
 
             scaffoldBackgroundColor: Color(0xffF1FAEE)),
-        home: Game());
+        home: NewGame());
   }
 }

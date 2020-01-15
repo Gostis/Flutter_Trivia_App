@@ -25,6 +25,8 @@ class Genre {
 }
 
 class _NewGameMenu extends State<NewGame> {
+  bool pressed = true;
+
   List _locations;
   List difficulty = ["Easy", "Intermediate", "Difficult"];
   double lives = 3.0;
@@ -59,7 +61,7 @@ class _NewGameMenu extends State<NewGame> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(height: 35),
+              SizedBox(height: 40),
               Text(
                 "New Game",
                 textAlign: TextAlign.center,
@@ -68,7 +70,7 @@ class _NewGameMenu extends State<NewGame> {
                     fontSize: 35,
                     fontWeight: FontWeight.w600),
               ),
-              SizedBox(height: (MediaQuery.of(context).size.width / 4) - 50),
+              SizedBox(height: (MediaQuery.of(context).size.width / 4) - 55),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -185,14 +187,19 @@ class _NewGameMenu extends State<NewGame> {
                     SizedBox(
                       height: 30,
                     ),
-                    RaisedButton(
+                    OutlineButton(
+                      textColor: Color(0xffeb606a),
                       onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => Game()));
                       },
+                      highlightedBorderColor: Color(0xffeb606a),
+                      borderSide:
+                          BorderSide(color: Theme.of(context).primaryColor),
                       child: Text('Start Game',
-                          style:
-                              TextStyle(fontSize: 20, color: Colors.black26)),
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Theme.of(context).primaryColor)),
                     ),
                   ]),
                 ],

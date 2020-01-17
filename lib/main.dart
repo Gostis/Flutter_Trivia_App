@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/game_settings_bloc.dart';
+// Screens
+import 'screens/questions_test_screen.dart';
 import 'screens/new_game.dart';
 import 'screens/start_screen.dart';
 import 'screens/game_screen.dart';

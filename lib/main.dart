@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trivia_app/data/weather_repository.dart';
 
-import 'bloc/weather_bloc.dart';
+import 'bloc/game_settings_bloc.dart';
 import 'screens/new_game.dart';
 import 'screens/start_screen.dart';
 import 'screens/game_screen.dart';
-import 'screens/weather_search_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -31,8 +29,8 @@ class MyApp extends StatelessWidget {
 
             scaffoldBackgroundColor: Color(0xffF1FAEE)),
         home: BlocProvider(
-          create: (context) => WeatherBloc(FakeWeatherRepository()),
-          child: WeatherSearchPage(),
+          create: (context) => GameSettingsBloc(),
+          child: NewGame(),
         ));
   }
 }

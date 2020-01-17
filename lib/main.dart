@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// Screens
+import 'screens/questions_test_screen.dart';
 import 'screens/new_game.dart';
 import 'screens/start_screen.dart';
 import 'screens/game_screen.dart';
@@ -25,6 +27,6 @@ class MyApp extends StatelessWidget {
             // Define the default font family.
 
             scaffoldBackgroundColor: Color(0xffF1FAEE)),
-        home: NewGame());
+        home: MyListScreen());
   }
 }

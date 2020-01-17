@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AnswerButton extends StatefulWidget {
-  AnswerButton({this.correct, this.answerText});
   final bool correct;
   final String answerText;
+
+  AnswerButton({this.correct, this.answerText});
 
   @override
   _AnswerButtonState createState() => _AnswerButtonState();

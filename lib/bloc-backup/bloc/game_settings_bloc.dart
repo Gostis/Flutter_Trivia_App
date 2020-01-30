@@ -1,3 +1,4 @@
+/*
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:trivia_app/data/model/game_settings.dart';
@@ -34,3 +35,4 @@ class GameSettingsBloc extends Bloc<GameSettingsEvent, GameSettingsState> {
     }*/
   }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:trivia_app/data/model/game_settings.dart';
@@ -43,3 +44,4 @@ class GameSettingsError extends GameSettingsState {
   @override
   List<Object> get props => [this.message];
 }
+*/

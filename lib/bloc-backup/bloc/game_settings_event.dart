@@ -1,3 +1,4 @@
+/*
 import 'package:equatable/equatable.dart';
 import 'package:trivia_app/data/model/game_settings.dart';
 import 'package:trivia_app/data/model/question.dart';
@@ -30,3 +31,4 @@ class GetTriviaQustions extends GameSettingsEvent {
   // TODO: implement props
   List<Object> get props => [this.questions];
 }
+*/

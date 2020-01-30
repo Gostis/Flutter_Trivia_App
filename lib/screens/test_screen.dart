@@ -1,74 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trivia_app/bloc/bloc.dart';
-import 'package:trivia_app/bloc/game_settings_bloc.dart';
-import 'package:trivia_app/data/model/game_settings.dart';
+import 'package:provider/provider.dart';
+import 'package:trivia_app/models/game_settings.dart';
 
-class TestScreen extends StatefulWidget {
-  final GameSettings masterSettings;
-
-  const TestScreen({
-    Key key,
-    @required this.masterSettings,
-  }) : super(key: key);
-
-  @override
-  _TestScreenState createState() => _TestScreenState();
-}
-
-class _TestScreenState extends State<TestScreen> {
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    BlocProvider.of<GameSettingsBloc>(context).add(GetGameSettings(
-        widget.masterSettings.difficulty,
-        widget.masterSettings.category,
-        widget.masterSettings.lives,
-        widget.masterSettings.time));
-  }
-
+class TestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final settings = Provider.of<GameSettings>(context, listen: true);
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Weather Detail"),
-      ),
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 16),
-        alignment: Alignment.center,
-        child: BlocBuilder<GameSettingsBloc, GameSettingsState>(
-            builder: (context, state) {
-          if (state is GameSettingsLoaded) {
-            return (Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Text(
-                  state.gamesettings.category,
+      body: SafeArea(
+        child: Container(
+            child: Column(children: <Widget>[
+          Text(
+            'Your difficulty ${settings.difficulty}',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 20,
+                fontWeight: FontWeight.w600),
+          ),
+          Text(
+            'Your category ${settings.category}',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 20,
+                fontWeight: FontWeight.w600),
+          ),
+          Text(
+            'Your category ${settings.lives}',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 20,
+                fontWeight: FontWeight.w600),
+          ),
+          OutlineButton(
+              child: Text('Decrement',
                   style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                Text(
-                  // Display the Celsius temperature with 1 decimal place
-                  state.gamesettings.difficulty,
-                  style: TextStyle(fontSize: 80),
-                ),
-                Text(
-                  // Display the Fahrenheit temperature with 1 decimal place
-                  state.gamesettings.lives.toString(),
-                  style: TextStyle(fontSize: 80),
-                ),
-                Text(
-                  // Display the Fahrenheit temperature with 1 decimal place
-                  state.gamesettings.time.toString(),
-                  style: TextStyle(fontSize: 80),
-                ),
-              ],
-            ));
-          }
-        }),
+                      fontSize: 20, color: Theme.of(context).primaryColor)),
+              textColor: Color(0xffeb606a),
+              onPressed: () => updateValues(context))
+        ])),
       ),
     );
+  }
+
+  updateValues(BuildContext context) {
+    print("called");
+
+    Provider.of<GameSettings>(context, listen: false).decrementLives();
+    print(Provider.of<GameSettings>(context, listen: false).lives.toString());
   }
 }

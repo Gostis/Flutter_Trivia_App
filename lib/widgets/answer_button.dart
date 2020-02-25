@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../screens/next_question_test_screen.dart';
+
+import 'package:provider/provider.dart';
+import 'package:trivia_app/models/game_settings.dart';
+
 class AnswerButton extends StatefulWidget {
   final bool correct;
   final String answerText;
@@ -23,6 +28,12 @@ class _AnswerButtonState extends State<AnswerButton> {
           } else {
             _color = Colors.red;
           }
+
+          Provider.of<GameSettings>(context, listen: false)
+              .pushAnswer(widget.correct);
+
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => NextQuestionScreen()));
         });
       },
       child: Card(

@@ -13,20 +13,20 @@ class NewGame extends StatefulWidget {
   State<StatefulWidget> createState() => _NewGameMenu();
 }
 
-class Genre {
-  final String genre, id;
-  Genre({
-    this.genre,
-    this.id,
-  });
+// class Genre {
+//   final String genre, id;
+//   Genre({
+//     this.genre,
+//     this.id,
+//   });
 
-  factory Genre.fromJson(Map<String, dynamic> json) {
-    return new Genre(
-      genre: json['name'].toString(),
-      id: json['id'].toString(),
-    );
-  }
-}
+//   factory Genre.fromJson(Map<String, dynamic> json) {
+//     return new Genre(
+//       genre: json['name'].toString(),
+//       id: json['id'].toString(),
+//     );
+//   }
+// }
 
 class _NewGameMenu extends State<NewGame> {
   List categories;

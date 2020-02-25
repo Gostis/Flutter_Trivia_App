@@ -2,11 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:trivia_app/models/question_model.dart';
-// import 'package:trivia_app/utils/question_services.dart';
+import 'package:trivia_app/utils/question_api.dart';
 
 // Other approach
-import 'package:trivia_app/utils/question_test_api.dart';
-// import 'taBort/questionTaBort.dart';
+// import 'package:trivia_app/utils/question_services.dart';
 
 // class QuestionScreenTest extends StatefulWidget {
 //   @override

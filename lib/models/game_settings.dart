@@ -6,7 +6,7 @@ class GameSettings with ChangeNotifier {
   String _difficulty;
   int _time;
   int _lives;
-
+  List<bool> _correctAnswers = [];
   //updating over time
   int _score;
   int _remaningLives;
@@ -20,12 +20,19 @@ class GameSettings with ChangeNotifier {
   int get lives => _lives;
   int get score => _score;
   int get remainingLives => _remaningLives;
+  List<bool> get correctAnswers => _correctAnswers;
 
   void changeSettings(String category, String difficulty, int time, int lives) {
     _category = category;
     _difficulty = difficulty;
     _time = time;
     _lives = lives;
+    notifyListeners();
+  }
+
+  void pushAnswer(bool answer) {
+    print("push answer");
+    _correctAnswers.add(answer);
     notifyListeners();
   }
 

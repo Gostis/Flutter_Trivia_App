@@ -1,8 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:trivia_app/models/question_model.dart';
+import '../models/question_model.dart';
 import 'package:trivia_app/utils/question_api.dart';
+
+import 'package:provider/provider.dart';
+import 'package:trivia_app/models/game_settings.dart';
+
+import 'game_screen.dart';
 
 // Other approach
 // import 'package:trivia_app/utils/question_services.dart';
@@ -67,14 +72,33 @@ class _MyListScreenState extends State {
   @override
   build(context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Question List"),
-        ),
-        body: ListView.builder(
-          itemCount: questions.length,
-          itemBuilder: (context, index) {
-            return ListTile(title: Text(questions[index].question));
-          },
-        ));
+      appBar: AppBar(
+        title: Text("Question List"),
+      ),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: ListView.builder(
+              itemCount: questions.length,
+              itemBuilder: (context, index) {
+                return ListTile(title: Text(questions[index].question));
+              },
+            ),
+          ),
+          RaisedButton(
+              onPressed: () => startGame(),
+              child: Text("Go to game", style: TextStyle(color: Colors.teal)))
+        ],
+      ),
+    );
+  }
+
+  void startGame() {
+    print(questions[0].allAnswers);
+    Provider.of<GameSettings>(context, listen: false)
+        .importQuestions(questions);
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => new Game()));
   }
 }

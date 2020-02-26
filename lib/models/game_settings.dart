@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import '../models/question_model.dart';
 
 class GameSettings with ChangeNotifier {
   //Initial state
@@ -7,6 +8,7 @@ class GameSettings with ChangeNotifier {
   int _time;
   int _lives;
   List<bool> _correctAnswers = [];
+  List<Question> _questions;
   //updating over time
   int _score;
   int _remaningLives;
@@ -21,12 +23,19 @@ class GameSettings with ChangeNotifier {
   int get score => _score;
   int get remainingLives => _remaningLives;
   List<bool> get correctAnswers => _correctAnswers;
+  List<Question> get questions => _questions;
 
   void changeSettings(String category, String difficulty, int time, int lives) {
     _category = category;
     _difficulty = difficulty;
     _time = time;
     _lives = lives;
+    notifyListeners();
+  }
+
+  void importQuestions(List<Question> questions) {
+    _questions = questions;
+
     notifyListeners();
   }
 

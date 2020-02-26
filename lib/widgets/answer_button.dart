@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../screens/next_question_test_screen.dart';
+import '../screens/game_screen.dart';
 
 import 'package:provider/provider.dart';
 import 'package:trivia_app/models/game_settings.dart';
@@ -20,6 +21,7 @@ class _AnswerButtonState extends State<AnswerButton> {
 
   @override
   Widget build(BuildContext context) {
+    final settings = Provider.of<GameSettings>(context, listen: true);
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -29,11 +31,15 @@ class _AnswerButtonState extends State<AnswerButton> {
             _color = Colors.red;
           }
 
-          Provider.of<GameSettings>(context, listen: false)
-              .pushAnswer(widget.correct);
-
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => NextQuestionScreen()));
+          if (settings.correctAnswers.length < 5) {
+            Provider.of<GameSettings>(context, listen: false)
+                .pushAnswer(widget.correct);
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => new Game()));
+          } else {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => NextQuestionScreen()));
+          }
         });
       },
       child: Card(

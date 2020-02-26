@@ -14,7 +14,7 @@ class NextQuestionScreen extends StatelessWidget {
               child: Column(
         children: <Widget>[
           Text(
-            'Your answer was ${settings.correctAnswers}',
+            'Your answer was ${settings.correctAnswers.length}',
             style: TextStyle(fontSize: 30, color: Colors.red),
           ),
           RaisedButton(

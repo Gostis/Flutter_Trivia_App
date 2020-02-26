@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
             // Define the default font family.
 
             scaffoldBackgroundColor: Color(0xffF1FAEE)),
-        home: Game(),
+        home: MyListScreen(),
       ),
     );
   }

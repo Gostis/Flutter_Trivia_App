@@ -4,7 +4,7 @@ import '../screens/next_question_test_screen.dart';
 import '../screens/game_screen.dart';
 
 import 'package:provider/provider.dart';
-import 'package:trivia_app/providers/game_settings.dart';
+
 import 'package:trivia_app/providers/question_provider.dart';
 
 class AnswerButton extends StatefulWidget {
@@ -35,6 +35,8 @@ class _AnswerButtonState extends State<AnswerButton> {
           if (questionStore.correctAnswers.length < 5) {
             Provider.of<QuestionProvider>(context, listen: false)
                 .pushAnswer(widget.correct);
+            Provider.of<QuestionProvider>(context, listen: false)
+                .incrementQuestion();
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => new Game()));
           } else {

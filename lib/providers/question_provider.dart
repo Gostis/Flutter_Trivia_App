@@ -2,13 +2,15 @@ import 'package:flutter/foundation.dart';
 import '../models/question_model.dart';
 
 class QuestionProvider with ChangeNotifier {
-  List<bool> _correctAnswers = [];
+  List<Answer> _correctAnswers = [];
   List<Question> _questions;
   int _questionCounter = 0;
+  int _correctAnswerCounter = 0;
   //Getters
-  List<bool> get correctAnswers => _correctAnswers;
+  List<Answer> get correctAnswers => _correctAnswers;
   List<Question> get questions => _questions;
   int get questionCounter => _questionCounter;
+  int get correctAnswerCounter => _correctAnswerCounter;
 
   void importQuestions(List<Question> questions) {
     _questions = questions;
@@ -16,15 +18,20 @@ class QuestionProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void pushAnswer(bool answer) {
-    print("push answer");
-    _correctAnswers.add(answer);
+  void pushAnswer(bool answer, String question) {
+    _correctAnswers.add(new Answer(isCorrect: answer, question: question));
     notifyListeners();
   }
 
   void incrementQuestion() {
     _questionCounter++;
-    print(_questionCounter);
+
+    notifyListeners();
+  }
+
+  void incrementCorrectAnswers() {
+    _correctAnswerCounter++;
+
     notifyListeners();
   }
 }

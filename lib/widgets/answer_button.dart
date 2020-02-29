@@ -28,13 +28,15 @@ class _AnswerButtonState extends State<AnswerButton> {
         setState(() {
           if (widget.correct) {
             _color = Colors.green;
+            Provider.of<QuestionProvider>(context, listen: false)
+                .incrementCorrectAnswers();
           } else {
             _color = Colors.red;
           }
 
           if (questionStore.correctAnswers.length < 5) {
             Provider.of<QuestionProvider>(context, listen: false)
-                .pushAnswer(widget.correct);
+                .pushAnswer(widget.correct, widget.answerText);
             Provider.of<QuestionProvider>(context, listen: false)
                 .incrementQuestion();
             Navigator.push(

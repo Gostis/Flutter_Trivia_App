@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trivia_app/models/game_settings.dart';
+import 'package:trivia_app/providers/game_settings.dart';
 
 class TestScreen extends StatelessWidget {
   @override

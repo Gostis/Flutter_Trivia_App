@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-import 'package:trivia_app/models/game_settings.dart';
+import 'package:trivia_app/providers/game_settings.dart';
+import 'package:trivia_app/providers/question_provider.dart';
 
 class NextQuestionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final settings = Provider.of<GameSettings>(context, listen: true);
+    final settings = Provider.of<QuestionProvider>(context, listen: true);
     return Scaffold(
         body: SafeArea(
       child: Container(
@@ -19,7 +20,7 @@ class NextQuestionScreen extends StatelessWidget {
           ),
           RaisedButton(
               onPressed: () => {
-                    Provider.of<GameSettings>(context, listen: false)
+                    Provider.of<QuestionProvider>(context, listen: false)
                         .pushAnswer(true)
                   },
               child: Text("Add add", style: TextStyle(color: Colors.teal)))

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:provider/provider.dart';
-import 'package:trivia_app/models/game_settings.dart';
+import 'package:trivia_app/providers/game_settings.dart';
 import 'package:trivia_app/screens/test_screen.dart';
 
 import 'game_screen.dart';

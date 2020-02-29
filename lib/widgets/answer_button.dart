@@ -4,7 +4,8 @@ import '../screens/next_question_test_screen.dart';
 import '../screens/game_screen.dart';
 
 import 'package:provider/provider.dart';
-import 'package:trivia_app/models/game_settings.dart';
+import 'package:trivia_app/providers/game_settings.dart';
+import 'package:trivia_app/providers/question_provider.dart';
 
 class AnswerButton extends StatefulWidget {
   final bool correct;
@@ -21,7 +22,7 @@ class _AnswerButtonState extends State<AnswerButton> {
 
   @override
   Widget build(BuildContext context) {
-    final settings = Provider.of<GameSettings>(context, listen: true);
+    final questionStore = Provider.of<QuestionProvider>(context, listen: true);
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -31,8 +32,8 @@ class _AnswerButtonState extends State<AnswerButton> {
             _color = Colors.red;
           }
 
-          if (settings.correctAnswers.length < 5) {
-            Provider.of<GameSettings>(context, listen: false)
+          if (questionStore.correctAnswers.length < 5) {
+            Provider.of<QuestionProvider>(context, listen: false)
                 .pushAnswer(widget.correct);
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => new Game()));

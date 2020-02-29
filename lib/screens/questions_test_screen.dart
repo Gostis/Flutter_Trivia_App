@@ -5,8 +5,8 @@ import '../models/question_model.dart';
 import 'package:trivia_app/utils/question_api.dart';
 
 import 'package:provider/provider.dart';
-import 'package:trivia_app/models/game_settings.dart';
-
+import 'package:trivia_app/providers/game_settings.dart';
+import 'package:trivia_app/providers/question_provider.dart';
 import 'game_screen.dart';
 
 // Other approach
@@ -57,6 +57,11 @@ class _MyListScreenState extends State {
         questions = List<Question>.from(
             list['results'].map((model) => Question.fromJson(model)));
       });
+      print("All answersList: ");
+      for (var i = 0; i < questions[0].allAnswers.length; i++) {
+        print(
+            "${questions[0].allAnswers[i].isCorrect}, ${questions[0].allAnswers[i].question}");
+      }
     });
   }
 
@@ -94,8 +99,7 @@ class _MyListScreenState extends State {
   }
 
   void startGame() {
-    print(questions[0].allAnswers);
-    Provider.of<GameSettings>(context, listen: false)
+    Provider.of<QuestionProvider>(context, listen: false)
         .importQuestions(questions);
 
     Navigator.push(

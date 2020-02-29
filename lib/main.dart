@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Screens
-import 'models/game_settings.dart';
+import 'providers/game_settings.dart';
+import 'providers/question_provider.dart';
 import 'screens/new_game.dart';
 import 'screens/questions_test_screen.dart';
 import 'screens/game_screen.dart';
@@ -14,7 +15,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => GameSettings())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => GameSettings()),
+        ChangeNotifierProvider(create: (_) => QuestionProvider())
+      ],
       child: MaterialApp(
         theme: ThemeData(
             primaryColor: Color(0xffE63946),

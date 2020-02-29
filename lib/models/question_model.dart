@@ -1,10 +1,12 @@
+import '../utils/util_functions.dart';
+
 class Question {
   String category;
   String question;
   String difficulty;
   String corrctAnswer;
   List<String> incorrectAnswers;
-  List<String> allAnswers;
+  List<Answer> allAnswers;
 
   Question(
       {this.category,
@@ -18,8 +20,16 @@ class Question {
     var incorrectAnswers = parsedJson['incorrect_answers'];
 
     List<String> incorrectAnswersList = new List<String>.from(incorrectAnswers);
-    List<String> allAnswersList = incorrectAnswersList;
-    allAnswersList.add(parsedJson['correct_answer']);
+
+    List<Answer> allAnswersList = new List<Answer>();
+
+    for (var item in incorrectAnswersList) {
+      allAnswersList.add(new Answer(isCorrect: false, question: item));
+    }
+    allAnswersList.add(
+        new Answer(isCorrect: true, question: parsedJson['correct_answer']));
+
+    List<Answer> allAnswersListShuffled = shuffle(allAnswersList);
 
     return new Question(
         category: parsedJson['category'],
@@ -27,6 +37,13 @@ class Question {
         difficulty: parsedJson['difficulty'],
         corrctAnswer: parsedJson['correct_answer'],
         incorrectAnswers: incorrectAnswersList,
-        allAnswers: allAnswersList);
+        allAnswers: allAnswersListShuffled);
   }
+}
+
+class Answer {
+  String question;
+  bool isCorrect;
+
+  Answer({this.question, this.isCorrect});
 }

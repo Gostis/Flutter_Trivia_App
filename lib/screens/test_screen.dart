@@ -19,7 +19,7 @@ class TestScreen extends StatelessWidget {
                 fontWeight: FontWeight.w600),
           ),
           Text(
-            'Your category ${settings.category}',
+            'Your category ${settings.category.genre}',
             textAlign: TextAlign.center,
             style: TextStyle(
                 color: Theme.of(context).primaryColor,

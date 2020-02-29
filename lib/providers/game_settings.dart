@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
+import 'package:trivia_app/models/genre_model.dart';
 import '../models/question_model.dart';
 
 class GameSettings with ChangeNotifier {
   //Initial state
-  String _category;
+  Genre _category;
   String _difficulty;
   int _time;
   int _lives;
@@ -16,7 +17,7 @@ class GameSettings with ChangeNotifier {
   //GameSettings();
 
   //Getters
-  String get category => _category;
+  Genre get category => _category;
   String get difficulty => _difficulty;
   int get time => _time;
   int get lives => _lives;
@@ -25,7 +26,7 @@ class GameSettings with ChangeNotifier {
   List<bool> get correctAnswers => _correctAnswers;
   List<Question> get questions => _questions;
 
-  void changeSettings(String category, String difficulty, int time, int lives) {
+  void changeSettings(String difficulty, Genre category, int time, int lives) {
     _category = category;
     _difficulty = difficulty;
     _time = time;

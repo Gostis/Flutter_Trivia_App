@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:provider/provider.dart';
 import 'package:trivia_app/providers/game_settings.dart';
@@ -7,35 +8,23 @@ import 'package:trivia_app/screens/test_screen.dart';
 import 'game_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:trivia_app/models/genre_model.dart';
+
+import '../utils/question_api.dart';
 
 class NewGame extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _NewGameMenu();
 }
 
-// class Genre {
-//   final String genre, id;
-//   Genre({
-//     this.genre,
-//     this.id,
-//   });
-
-//   factory Genre.fromJson(Map<String, dynamic> json) {
-//     return new Genre(
-//       genre: json['name'].toString(),
-//       id: json['id'].toString(),
-//     );
-//   }
-// }
-
 class _NewGameMenu extends State<NewGame> {
-  List categories;
+  List<Genre> categories;
   bool pressed = true;
   List difficulty = ["Easy", "Intermediate", "Difficult"];
   double lives = 3.0;
   double timePerQuestion = 10;
 
-  String _selectedLocation; // Option 2
+  Genre _selectedLocation; // Option 2
   String _selectedDifficulty;
 
   Future<List<String>> _parseCategories() async {
@@ -44,9 +33,8 @@ class _NewGameMenu extends State<NewGame> {
 
     setState(() {
       var responseJson = json.decode(response.body);
-      categories = responseJson['trivia_categories']
-          .map((genre) => genre['name'].toString())
-          .toList();
+      categories = List<Genre>.from(responseJson['trivia_categories']
+          .map((genre) => Genre.fromJson(genre)));
     });
   }
 
@@ -105,7 +93,7 @@ class _NewGameMenu extends State<NewGame> {
                             items: categories != null
                                 ? categories.map((location) {
                                     return DropdownMenuItem(
-                                      child: new Text(location),
+                                      child: new Text(location.genre),
                                       value: location,
                                     );
                                   }).toList()
@@ -207,7 +195,7 @@ class _NewGameMenu extends State<NewGame> {
   void confirmSettings(BuildContext context) {
     Provider.of<GameSettings>(context, listen: false).changeSettings(
         _selectedDifficulty.toString(),
-        _selectedLocation.toString(),
+        _selectedLocation,
         lives.toInt(),
         timePerQuestion.toInt());
   }

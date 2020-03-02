@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:provider/provider.dart';
+import 'package:trivia_app/models/question_model.dart';
 import 'package:trivia_app/providers/game_settings.dart';
+import 'package:trivia_app/providers/question_provider.dart';
 import 'package:trivia_app/screens/test_screen.dart';
 
 import 'game_screen.dart';
@@ -18,15 +20,17 @@ class NewGame extends StatefulWidget {
 }
 
 class _NewGameMenu extends State<NewGame> {
+  var questions = new List<Question>();
   List<Genre> categories;
   bool pressed = true;
-  List difficulty = ["Easy", "Intermediate", "Difficult"];
+  List<String> difficulty = ["Easy", "Medium", "Hard"];
   double lives = 3.0;
   double timePerQuestion = 10;
 
   Genre _selectedLocation; // Option 2
   String _selectedDifficulty;
 
+  //
   Future<List<String>> _parseCategories() async {
     http.Response response =
         await http.get('https://opentdb.com/api_category.php');
@@ -35,6 +39,18 @@ class _NewGameMenu extends State<NewGame> {
       var responseJson = json.decode(response.body);
       categories = List<Genre>.from(responseJson['trivia_categories']
           .map((genre) => Genre.fromJson(genre)));
+    });
+  }
+
+  Future _getQuestions() async {
+    await getQuestions(
+            difficulty: _selectedDifficulty, category: _selectedLocation.id)
+        .then((response) {
+      setState(() {
+        var list = json.decode(response.body);
+        questions = List<Question>.from(
+            list['results'].map((model) => Question.fromJson(model)));
+      });
     });
   }
 
@@ -116,7 +132,7 @@ class _NewGameMenu extends State<NewGame> {
                                 _selectedDifficulty = newValue;
                               });
                             },
-                            items: <String>['Easy', 'Intermediate', 'Hard']
+                            items: <String>['easy', 'medium', 'hard']
                                 .map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
@@ -174,9 +190,10 @@ class _NewGameMenu extends State<NewGame> {
                 OutlineButton(
                   textColor: Color(0xffeb606a),
                   onPressed: () {
-                    confirmSettings(context);
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => TestScreen()));
+                    // confirmSettings(context);
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => TestScreen()));
+                    startGame(context);
                   },
                   highlightedBorderColor: Color(0xffeb606a),
                   borderSide: BorderSide(color: Theme.of(context).primaryColor),
@@ -198,5 +215,15 @@ class _NewGameMenu extends State<NewGame> {
         _selectedLocation,
         lives.toInt(),
         timePerQuestion.toInt());
+  }
+
+  void startGame(BuildContext context) async {
+    confirmSettings(context);
+    await this._getQuestions();
+    Provider.of<QuestionProvider>(context, listen: false)
+        .importQuestions(questions);
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => new Game()));
   }
 }

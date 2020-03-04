@@ -34,7 +34,7 @@ class _AnswerButtonState extends State<AnswerButton> {
             _color = Colors.red;
           }
 
-          if (questionStore.correctAnswers.length < 5) {
+          if (questionStore.questionCounter < 5) {
             Provider.of<QuestionProvider>(context, listen: false)
                 .pushAnswer(widget.correct, widget.answerText);
             Provider.of<QuestionProvider>(context, listen: false)

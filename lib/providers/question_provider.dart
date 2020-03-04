@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import '../models/question_model.dart';
 
 class QuestionProvider with ChangeNotifier {
@@ -6,11 +7,14 @@ class QuestionProvider with ChangeNotifier {
   List<Question> _questions;
   int _questionCounter = 0;
   int _correctAnswerCounter = 0;
+  Color _answerColor = Colors.white;
+
   //Getters
   List<Answer> get correctAnswers => _correctAnswers;
   List<Question> get questions => _questions;
   int get questionCounter => _questionCounter;
   int get correctAnswerCounter => _correctAnswerCounter;
+  Color get answerColor => _answerColor;
 
   void importQuestions(List<Question> questions) {
     _questions = questions;
@@ -32,6 +36,10 @@ class QuestionProvider with ChangeNotifier {
   void incrementCorrectAnswers() {
     _correctAnswerCounter++;
 
+    notifyListeners();
+  }
+
+  void showCorrectAnswer() {
     notifyListeners();
   }
 }

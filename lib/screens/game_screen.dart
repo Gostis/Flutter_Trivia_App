@@ -4,6 +4,7 @@ import 'package:trivia_app/providers/game_settings.dart';
 import 'package:trivia_app/providers/question_provider.dart';
 import 'package:trivia_app/widgets/game_answers.dart';
 import 'package:trivia_app/widgets/question_text.dart';
+import 'dart:async';
 
 class Game extends StatefulWidget {
   @override
@@ -24,8 +25,8 @@ class _GameState extends State<Game> {
               style: TextStyle(color: Colors.amber[900], fontSize: 40),
             ),
           ),
-          QuestionText(questionStore
-              .questions[questionStore.correctAnswers.length].question),
+          QuestionText(
+              questionStore.questions[questionStore.questionCounter].question),
           GameAnswers(),
         ],
       ),

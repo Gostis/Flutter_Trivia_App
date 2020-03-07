@@ -7,14 +7,12 @@ class QuestionProvider with ChangeNotifier {
   List<Question> _questions;
   int _questionCounter = 0;
   int _correctAnswerCounter = 0;
-  Color _answerColor = Colors.white;
 
   //Getters
   List<Answer> get correctAnswers => _correctAnswers;
   List<Question> get questions => _questions;
   int get questionCounter => _questionCounter;
   int get correctAnswerCounter => _correctAnswerCounter;
-  Color get answerColor => _answerColor;
 
   void importQuestions(List<Question> questions) {
     _questions = questions;
@@ -36,10 +34,6 @@ class QuestionProvider with ChangeNotifier {
   void incrementCorrectAnswers() {
     _correctAnswerCounter++;
 
-    notifyListeners();
-  }
-
-  void showCorrectAnswer() {
     notifyListeners();
   }
 }

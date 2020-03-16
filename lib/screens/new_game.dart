@@ -31,7 +31,7 @@ class _NewGameMenu extends State<NewGame> {
   String _selectedDifficulty;
 
   //
-  Future<List<String>> _parseCategories() async {
+  Future _parseCategories() async {
     http.Response response =
         await http.get('https://opentdb.com/api_category.php');
 
@@ -224,6 +224,9 @@ class _NewGameMenu extends State<NewGame> {
         .importQuestions(questions);
 
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => new Game()));
+        context,
+        MaterialPageRoute(
+            builder: (context) => new Game(
+                numberOfQuestions: questions.length, questionCounter: 0)));
   }
 }

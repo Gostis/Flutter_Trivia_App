@@ -20,6 +20,7 @@ class _GameAnswersState extends State<GameAnswers> {
   List<Color> _answerColors = new List<Color>.filled(4, Colors.white);
   int _questionCounter;
   List<Answer> _answers;
+  int _numberOfQuestions;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,7 @@ class _GameAnswersState extends State<GameAnswers> {
       _questionCounter = questionStore.questionCounter;
       _answers =
           questionStore.questions[questionStore.questionCounter].allAnswers;
+      _numberOfQuestions = questionStore.questions.length;
     });
     return Column(
       children: <Widget>[
@@ -35,7 +37,7 @@ class _GameAnswersState extends State<GameAnswers> {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                answerPressed(context, 0);
+                answerPressed(context, 0, _numberOfQuestions);
               },
               child: new AnswerButton(
                   correct: questionStore
@@ -51,7 +53,7 @@ class _GameAnswersState extends State<GameAnswers> {
             Expanded(
                 child: GestureDetector(
               onTap: () {
-                answerPressed(context, 1);
+                answerPressed(context, 1, _numberOfQuestions);
               },
               child: new AnswerButton(
                   correct: questionStore
@@ -70,7 +72,7 @@ class _GameAnswersState extends State<GameAnswers> {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                answerPressed(context, 2);
+                answerPressed(context, 2, _numberOfQuestions);
               },
               child: new AnswerButton(
                   correct: questionStore
@@ -86,7 +88,7 @@ class _GameAnswersState extends State<GameAnswers> {
             Expanded(
                 child: GestureDetector(
               onTap: () {
-                answerPressed(context, 3);
+                answerPressed(context, 3, _numberOfQuestions);
               },
               child: new AnswerButton(
                   correct: questionStore
@@ -105,7 +107,8 @@ class _GameAnswersState extends State<GameAnswers> {
     );
   }
 
-  void answerPressed(BuildContext context, int answerIndex) {
+  void answerPressed(
+      BuildContext context, int answerIndex, int numberOfQuestions) {
     if (_answers[answerIndex].isCorrect) {
       _answerColors[answerIndex] = Colors.green;
       Provider.of<QuestionProvider>(context, listen: false)
@@ -128,7 +131,7 @@ class _GameAnswersState extends State<GameAnswers> {
           _answers[answerIndex].isCorrect, _answers[answerIndex].question);
       Provider.of<QuestionProvider>(context, listen: false).incrementQuestion();
       Timer(Duration(seconds: 3), () {
-        nextQuestion(context);
+        nextQuestion(context, _questionCounter, numberOfQuestions);
       });
     } else {
       Navigator.push(context,
@@ -136,8 +139,15 @@ class _GameAnswersState extends State<GameAnswers> {
     }
   }
 
-  void nextQuestion(BuildContext context) {
+  void nextQuestion(
+      BuildContext context, int questionCounter, int numberOfQuestions) {
+    print("Question counter:  $questionCounter");
+    print("numberOfQuestions:  $numberOfQuestions");
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => new Game()));
+        context,
+        MaterialPageRoute(
+            builder: (context) => new Game(
+                numberOfQuestions: numberOfQuestions,
+                questionCounter: questionCounter)));
   }
 }
